@@ -1,0 +1,82 @@
+// this is for BE
+1. Use Twilio dev account info to call API:
+    TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
+    TWILIO_API_KEY: process.env.TWILIO_API_KEY,
+    TWILIO_API_SECRET: process.env.TWILIO_API_SECRET
+    ex:
+        const token = new AccessToken(
+            config.TWILIO_ACCOUNT_SID,
+            config.TWILIO_API_KEY,
+            config.TWILIO_API_SECRET
+        );
+2. Create user for client using:
+    https://www.twilio.com/docs/chat/rest/user-resource#create-a-user-resource
+3. Create token and assign Grant to user:
+    https://www.twilio.com/docs/chat/create-tokens
+
+// this is for client
+// https://www.twilio.com/docs/chat/sdk-download-install#javascript-sdk
+1. Login to web system to get token then init Twilio client
+    var chatClient;
+    var generalChannel;
+    Twilio.Chat.Client.create(data.token).then(client => {
+      console.log('Created chat client');
+      chatClient = client;
+      chatClient.getSubscribedChannels().then(createOrJoinGeneralChannel);
+    });
+
+2. After have token and created chat client then create or subscribe to specific channel
+    function createOrJoinGeneralChannel() {
+        // Get the general chat channel, which is where all the messages are
+        // sent in this simple application
+        chatClient.getChannelByUniqueName('general')
+        .then(function(channel) {
+        generalChannel = channel;
+        console.log('Found general channel:');
+        console.log(generalChannel);
+        setupChannel();
+        }).catch(function() {
+        // If it doesn't exist, let's create it
+        console.log('Creating general channel');
+        chatClient.createChannel({
+            uniqueName: 'general',
+            friendlyName: 'General Chat Channel'
+        }).then(function(channel) {
+            console.log('Created general channel:');
+            console.log(channel);
+            generalChannel = channel;
+            setupChannel();
+        }).catch(function(channel) {
+            console.log('Channel could not be created:');
+            console.log(channel);
+        });
+        });
+    }
+
+3. Implement chat functions: 
+    - Join channel
+        generalChannel.join().then(success code)
+    - Listen for new messages sent to the channel
+        generalChannel.on('messageAdded', function(message) {
+            console.log(message.author, message.body);
+        });
+    - Send new message to channel
+        generalChannel.sendMessage(message text)
+    - Get all public getSubscribedChannels
+        chatClient.getPublicChannelDescriptors().then(function(paginator) {
+            for (i = 0; i < paginator.items.length; i++) {
+                const channel = paginator.items[i];
+                console.log('Channel: ' + channel.friendlyName);
+            }
+        });
+    - Get all Subscribed(joined) Channels
+        chatClient.getSubscribedChannels().then(function(paginator) {
+            for (i = 0; i < paginator.items.length; i++) {
+                const channel = paginator.items[i];
+                console.log('Channel: ' + channel.friendlyName);
+            }
+        });
+    _ Delete channel (with have permission)
+        myChannel.delete().then(function(channel) {
+            console.log('Deleted channel: ' + channel.sid);
+        });

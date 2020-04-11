@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twilio Chat</title>
+    <link rel="shortcut icon" href="//www.twilio.com/marketing/bundles/marketing/img/favicons/favicon.ico">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" crossorigin="anonymous"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u">
+    
+    <link rel="stylesheet" href="index.css">
+</head>
+<body style="position: relative;">
+  <section id="section-user">
+    <h2>Select one user to chat</h2>
+    <div class="user-list" id="userList">
+      
+    </div>
+    <a id="home" class="btn btn-lg btn-success" href="/">Home</a>
+  </section>
+  <section id="section-channel">
+    <h2>Select channel to join</h2>
+    <div class="channelList" id="channelList">
+      
+    </div>
+    <a id="home" class="btn btn-lg btn-success" href="/">Home</a>
+  </section>
+  <section id="section-chat">
+    <div id="messages"></div>
+    <input id="chat-input" type="text" placeholder="say anything" autofocus/>
+    <div class="chat-div">
+      <a id="leave" class="btn btn-lg btn-danger" onclick="leave()" href="/">Leave current channel</a>
+      <a id="home" class="btn btn-lg btn-success" href="/">Home</a>
+      <br>
+      <div>Users in group:</div>
+      <ul id="groupUser">
+
+      </ul>
+    </div>
+  </section>
+  <div class="loading">
+    Loading....
+  </div>
+  <script src="https://media.twiliocdn.com/sdk/js/chat/v3.3/twilio-chat.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

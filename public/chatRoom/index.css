@@ -106,6 +106,12 @@ html, body {
   color:cyan;
 }
 
+.message-time {
+  float: right;
+  color: #383838;
+  font-size: 12px;
+}
+
 .message-container .username.me {
   display:inline-block;
   margin-right:5px;

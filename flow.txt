@@ -80,3 +80,6 @@
         myChannel.delete().then(function(channel) {
             console.log('Deleted channel: ' + channel.sid);
         });
+
+
+    API doc: https://media.twiliocdn.com/sdk/js/chat/releases/1.0.1/docs/Channel.html#leave__anchor

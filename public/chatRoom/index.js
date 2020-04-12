@@ -160,8 +160,8 @@ function retreiveHistory (channel) {
     const totalMessages = messages.items.length;
     for (i = 0; i < totalMessages; i++) {
       const message = messages.items[i];
-      console.log('Author:' + message.author);
-      printMessage(message.author, message.body);
+      console.log('Messages:', message);
+      printMessage(message);
     }
     console.log('Total Messages:' + totalMessages);
   });
@@ -184,14 +184,18 @@ function retrieveGroupMember (channel) {
 }
 
 // Helper function to print chat message to the chat window
-function printMessage(fromUser, message) {
+function printMessage(_message) {
+  var fromUser = _message.author;
+  var message = _message.body;
+  var time = _message.timestamp.toLocaleString();
   var $user = $('<span class="username">').text(fromUser + ':');
   if (fromUser === username) {
     $user.addClass('me');
   }
   var $message = $('<span class="message">').text(message);
+  var $time = $('<span class="message-time">').text(time);
   var $container = $('<div class="message-container">');
-  $container.append($user).append($message);
+  $container.append($user).append($message).append($time);
   $chatWindow.append($container);
   $chatWindow.scrollTop($chatWindow[0].scrollHeight);
 }

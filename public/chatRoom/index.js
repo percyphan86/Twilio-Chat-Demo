@@ -103,6 +103,8 @@ function initChatRoom(data) {
         }
         generalChannel.sendMessage($input.val())
         $input.val('');
+      } else {
+        generalChannel.typing();
       }
     });
   }).catch(error => {
@@ -151,6 +153,18 @@ function setupChannel(channel) {
   // Listen for new messages sent to the channel
   channel.on('messageAdded', function(message) {
     printMessage(message.author, message.body);
+  });
+
+  //set up the listener for the typing started Channel event
+  channel.on('typingStarted', function(member) {
+    //process the member to show typing
+    updateTypingIndicator(member, true);
+  });
+
+  //set  the listener for the typing ended Channel event
+  channel.on('typingEnded', function(member) {
+    //process the member to stop showing typing
+    updateTypingIndicator(member, false);
   });
 }
 
@@ -205,5 +219,13 @@ function leave() {
     generalChannel.leave().then(function() {
       $('#home').click();
     })
+  }
+}
+
+function updateTypingIndicator(user, isTyping) {
+  if (isTyping){
+    $('#indicatior').html(user.identity + ' is typing...');
+  } else {
+    $('#indicatior').html('');
   }
 }

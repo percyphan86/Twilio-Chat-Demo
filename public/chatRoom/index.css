@@ -73,10 +73,18 @@ html, body {
 #messages {
   background-color:#232323;
   padding:10px;
-  height:100%;
+  height:95%;
   width:800px;
   margin:0 auto;
   overflow-y:auto;
+}
+
+#indicatior {
+  background-color:#232323;
+  height: 5%;
+  text-align: center;
+  width:800px;
+  margin:0 auto;
 }
 
 #messages p {
